@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HACKER HANDLE GENERATOR v1.0</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Boot Sequence Screen -->
+    <div id="boot-screen" class="boot-screen">
+        <div class="boot-header">
+            <div class="party-title">★ INSTAGRAM USER EMPOWERMENT ★</div>
+            <div class="party-subtitle">2025 HOLIDAY PARTY</div>
+        </div>
+        <div class="boot-terminal">
+            <div id="boot-output" class="boot-output"></div>
+            <div id="boot-cursor" class="cursor">_</div>
+        </div>
+        <div id="press-key" class="press-key hidden">
+            <span class="blink">[PRESS ANY KEY TO CONTINUE]</span>
+        </div>
+    </div>
+
+    <!-- Main Application -->
+    <div id="main-app" class="main-app hidden">
+        <!-- Scanline Overlay -->
+        <div class="scanlines"></div>
+
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <span class="header-icon">&#9608;&#9608;&#9608;&#9608;</span>
+                <h1>HACKER HANDLE GENERATOR</h1>
+                <span class="version">v1.0</span>
+            </div>
+            <div class="header-center">
+                <nav class="nav-tabs">
+                    <button id="nav-generator" class="nav-tab active" data-view="generator">
+                        <span>[</span> GENERATOR <span>]</span>
+                    </button>
+                    <button id="nav-rsvp-list" class="nav-tab" data-view="rsvp-list">
+                        <span>[</span> RSVP LIST <span>]</span>
+                    </button>
+                </nav>
+            </div>
+            <div class="header-right">
+                <span class="status-indicator"></span>
+                <span id="system-status">SYSTEM ONLINE</span>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Left Panel - Controls -->
+            <section class="control-panel">
+                <div class="panel-header">
+                    <span class="panel-icon">&gt;</span>
+                    <span>IDENTITY CONFIGURATION</span>
+                </div>
+
+                <div class="control-group">
+                    <label for="archetype-select" class="control-label">
+                        &gt; SELECT HACKER ARCHETYPE:
+                    </label>
+                    <div class="select-wrapper">
+                        <select id="archetype-select" class="archetype-select">
+                            <option value="">-- CHOOSE ARCHETYPE --</option>
+                            <option value="white-hat">WHITE HAT // Ethical Guardian</option>
+                            <option value="black-hat">BLACK HAT // Shadow Operator</option>
+                            <option value="grey-hat">GREY HAT // Moral Renegade</option>
+                            <option value="neuromancer">NEUROMANCER // Neural Jacker</option>
+                            <option value="script-kiddie">SCRIPT KIDDIE // Chaos Agent</option>
+                            <option value="hacktivist">HACKTIVIST // Digital Activist</option>
+                            <option value="phreaker">PHREAKER // Telecom Phantom</option>
+                            <option value="zero-cool">ZERO COOL // Legendary Elite</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <button id="generate-btn" class="generate-btn" disabled>
+                        <span class="btn-bracket">[</span>
+                        <span class="btn-text">GENERATE IDENTITY</span>
+                        <span class="btn-bracket">]</span>
+                    </button>
+                </div>
+
+                <!-- Mini Terminal for Generation -->
+                <div id="mini-terminal" class="mini-terminal hidden">
+                    <div class="mini-terminal-header">
+                        <span>root@gibson:~#</span>
+                    </div>
+                    <div id="mini-terminal-output" class="mini-terminal-output"></div>
+                </div>
+
+                <div class="system-info">
+                    <div class="info-line">&gt; CONNECTION: <span class="highlight">SECURE</span></div>
+                    <div class="info-line">&gt; ENCRYPTION: <span class="highlight">AES-256</span></div>
+                    <div class="info-line">&gt; STATUS: <span id="gen-status" class="highlight">READY_</span></div>
+                </div>
+            </section>
+
+            <!-- Right Panel - Output -->
+            <section class="output-panel">
+                <div class="panel-header">
+                    <span class="panel-icon">&gt;</span>
+                    <span>GENERATED IDENTITY</span>
+                </div>
+
+                <!-- Empty State -->
+                <div id="empty-state" class="empty-state">
+                    <div class="empty-ascii">
+    ██╗  ██╗ █████╗  ██████╗██╗  ██╗
+    ██║  ██║██╔══██╗██╔════╝██║ ██╔╝
+    ███████║███████║██║     █████╔╝
+    ██╔══██║██╔══██║██║     ██╔═██╗
+    ██║  ██║██║  ██║╚██████╗██║  ██╗
+    ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝
+                    </div>
+                    <p class="empty-text">SELECT ARCHETYPE AND GENERATE TO REVEAL YOUR IDENTITY</p>
+                </div>
+
+                <!-- Generated Result -->
+                <div id="result-container" class="result-container hidden">
+                    <div class="avatar-section">
+                        <div id="avatar-display" class="avatar-display">
+                            <!-- Avatar will be generated here -->
+                        </div>
+                        <div id="archetype-badge" class="archetype-badge"></div>
+                    </div>
+
+                    <div class="identity-section">
+                        <div class="handle-label">&gt;&gt; HANDLE:</div>
+                        <div id="hacker-handle" class="hacker-handle"></div>
+
+                        <div class="bio-label">&gt;&gt; DOSSIER:</div>
+                        <div id="hacker-bio" class="hacker-bio"></div>
+
+                        <div class="achievements-label">&gt;&gt; NOTABLE ACHIEVEMENTS:</div>
+                        <ul id="achievements-list" class="achievements-list"></ul>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button id="copy-btn" class="copy-btn">
+                            <span>[COPY TO CLIPBOARD]</span>
+                        </button>
+                        <button id="rsvp-btn" class="rsvp-btn">
+                            <span>[RSVP]</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- RSVP List View (Hidden by default) -->
+        <main id="rsvp-view" class="main-content rsvp-view hidden">
+            <!-- Left Panel - RSVP List -->
+            <section class="rsvp-list-panel">
+                <div class="panel-header">
+                    <span class="panel-icon">&gt;</span>
+                    <span>PARTY ATTENDEES</span>
+                    <span id="rsvp-count" class="rsvp-count">[0]</span>
+                </div>
+                <div id="rsvp-list" class="rsvp-list">
+                    <div id="rsvp-empty" class="rsvp-empty">
+                        <p>&gt; NO RSVPs YET_</p>
+                        <p class="dim">Generate an identity and RSVP to get started</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Panel - Selected Identity Details -->
+            <section class="rsvp-details-panel">
+                <div class="panel-header">
+                    <span class="panel-icon">&gt;</span>
+                    <span>HACKER DOSSIER</span>
+                </div>
+
+                <div id="rsvp-details-empty" class="rsvp-details-empty">
+                    <div class="empty-ascii small">
+    ╔═══════════════╗
+    ║   SELECT A    ║
+    ║    HACKER     ║
+    ║   TO VIEW     ║
+    ║   DETAILS     ║
+    ╚═══════════════╝
+                    </div>
+                    <p>&gt; CLICK ON AN ATTENDEE TO VIEW THEIR DOSSIER</p>
+                </div>
+
+                <div id="rsvp-details-content" class="rsvp-details-content hidden">
+                    <div class="avatar-section">
+                        <div id="rsvp-avatar-display" class="avatar-display"></div>
+                        <div id="rsvp-archetype-badge" class="archetype-badge"></div>
+                    </div>
+
+                    <div class="identity-section">
+                        <div class="name-label">&gt;&gt; REAL NAME:</div>
+                        <div id="rsvp-real-name" class="real-name"></div>
+
+                        <div class="handle-label">&gt;&gt; HANDLE:</div>
+                        <div id="rsvp-hacker-handle" class="hacker-handle"></div>
+
+                        <div class="status-label">&gt;&gt; RSVP STATUS:</div>
+                        <div id="rsvp-status-display" class="rsvp-status-display"></div>
+
+                        <div class="bio-label">&gt;&gt; DOSSIER:</div>
+                        <div id="rsvp-hacker-bio" class="hacker-bio"></div>
+
+                        <div class="achievements-label">&gt;&gt; NOTABLE ACHIEVEMENTS:</div>
+                        <ul id="rsvp-achievements-list" class="achievements-list"></ul>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <span>INSTAGRAM USER EMPOWERMENT // HOLIDAY PARTY 2025</span>
+            <span class="footer-separator">|</span>
+            <span>"HACK THE PLANET!"</span>
+        </footer>
+
+        <!-- RSVP Modal -->
+        <div id="rsvp-modal" class="modal hidden">
+            <div class="modal-overlay"></div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="panel-icon">&gt;</span>
+                    <span>RSVP // HOLIDAY PARTY 2025</span>
+                    <button id="modal-close" class="modal-close">[X]</button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-form">
+                        <div class="form-group">
+                            <label for="rsvp-name" class="control-label">&gt; ENTER YOUR NAME:</label>
+                            <input type="text" id="rsvp-name" class="text-input" placeholder="Your real name..." autocomplete="off">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label">&gt; WILL YOU ATTEND?</label>
+                            <div class="attendance-options">
+                                <button id="btn-attending" class="attendance-btn attending">
+                                    <span class="attendance-icon">✓</span>
+                                    <span>ATTENDING</span>
+                                </button>
+                                <button id="btn-not-attending" class="attendance-btn not-attending">
+                                    <span class="attendance-icon">✗</span>
+                                    <span>NOT ATTENDING</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <button id="rsvp-submit" class="submit-btn" disabled>
+                                <span class="btn-bracket">[</span>
+                                <span class="btn-text">SUBMIT RSVP</span>
+                                <span class="btn-bracket">]</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="modal-preview">
+                        <div class="preview-label">&gt; YOUR HACKER IDENTITY:</div>
+                        <div id="modal-preview-handle" class="preview-handle"></div>
+                        <div id="modal-preview-archetype" class="preview-archetype"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/terminal.js"></script>
+    <script src="js/generator.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
